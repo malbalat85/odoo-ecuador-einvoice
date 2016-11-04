@@ -15,13 +15,13 @@
   </infoTributaria>
   <infoFactura>
     <fechaEmision>{{ fechaEmision }}</fechaEmision> {# dd/mm/aaaa #}
-    <contribuyenteEspecial>{{ contribuyenteEspecial }}</contribuyenteEspecial>
+    {% if contribuyenteEspecial %}<contribuyenteEspecial>{{ contribuyenteEspecial }}</contribuyenteEspecial>{% endif %}
     <obligadoContabilidad>{{ obligadoContabilidad }}</obligadoContabilidad>
     <tipoIdentificacionComprador>{{ tipoIdentificacionComprador }}</tipoIdentificacionComprador>
     <razonSocialComprador>{{ razonSocialComprador }}</razonSocialComprador>
     <identificacionComprador>{{ identificacionComprador }}</identificacionComprador>
     <totalSinImpuestos>{{ totalSinImpuestos }}</totalSinImpuestos>
-    <totalDescuento>0.00</totalDescuento>
+    <totalDescuento>{{ totalDescuento }}</totalDescuento>
     <totalConImpuestos>
       {% for item in totalConImpuestos %}
       <totalImpuesto>
@@ -33,9 +33,9 @@
       </totalImpuesto>
       {% endfor %}
     </totalConImpuestos>
-    <propina>0.00</propina>
+    <propina>{{ propina }}</propina>
     <importeTotal>{{ importeTotal }}</importeTotal>
-    <moneda>DOLAR</moneda>
+    <moneda>{{ moneda }}</moneda>
   </infoFactura>
   <detalles>
     {% for item in detalles %}
@@ -44,7 +44,7 @@
       <descripcion>{{ item['descripcion'] }}</descripcion>
       <cantidad>{{ item['cantidad'] }}</cantidad>
       <precioUnitario>{{ item['precioUnitario'] }}</precioUnitario>
-      <descuento>0.00</descuento>
+      <descuento>{{ item['descuento']}}</descuento>
       <precioTotalSinImpuesto>{{ item['precioTotalSinImpuesto'] }}</precioTotalSinImpuesto>
       <impuestos>
 	{% for tax in item['impuestos'] %}

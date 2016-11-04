@@ -836,8 +836,8 @@
 					<xsd:complexType>
 						<xsd:sequence>
 							<xsd:element name="fechaEmision" type="fechaEmision"/>
-							<xsd:element name="dirEstablecimiento" type="dirEstablecimiento" minOccurs="0"/>
-							<xsd:element name="contribuyenteEspecial" type="contribuyenteEspecial" minOccurs="0"/>
+							<xsd:element name="dirEstablecimiento" minOccurs="0" type="dirEstablecimiento"/>
+							<xsd:element name="contribuyenteEspecial" minOccurs="0" type="contribuyenteEspecial"/>
 							<xsd:element name="obligadoContabilidad" minOccurs="0"	type="obligadoContabilidad"/>
 							<xsd:element name="comercioExterior" minOccurs="0"	type="comercioExterior"/>
 							<xsd:element name="incoTermFactura" minOccurs="0"	type="incoTermFactura"/>

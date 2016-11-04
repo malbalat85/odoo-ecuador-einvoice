@@ -65,6 +65,7 @@
     <tr><td width="70%" style="text-align:right">${formatLang(o.amount_vat_cero or 0.00, digits=2)}</td></tr>
     <tr><td width="70%" style="text-align:right">${formatLang(o.amount_tax, digits=2)}</td></tr>
     <tr><td width="70%" style="text-align:right">${formatLang(o.amount_total, digits=2)}</td></tr>
-  </table-->    
+  </table>
   %endfor
+</body>
 </html>

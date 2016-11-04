@@ -53,11 +53,13 @@ class DocumentXML(object):
         schema_file = open(file_path)
         xmlschema_doc = etree.parse(schema_file)
         xmlschema = etree.XMLSchema(xmlschema_doc)
+        # This is really a bad programing practice
+        # I must be return error log too
         try:
             xmlschema.assertValid(self.document)
-            return True
-        except DocumentInvalid:
-            return False
+            return True, None
+        except DocumentInvalid as error_log:
+            return False, error_log.message
 
     @classmethod
     def send_receipt(self, document):

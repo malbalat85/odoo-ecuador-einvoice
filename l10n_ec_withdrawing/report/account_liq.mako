@@ -59,6 +59,7 @@
     <tr><td style="text-align:right">${o.amount_vat or '0,00'}</td></tr>
     <tr><td style="text-align:right">${o.amount_tax or '0,00'}</td></tr>
     <tr><td style="text-align:right">${o.amount_total or '0.00'}</td></tr>
-  </table-->    
+  </table>
   %endfor
+</body>
 </html>

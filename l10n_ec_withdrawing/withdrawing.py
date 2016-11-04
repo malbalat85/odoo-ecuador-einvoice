@@ -491,7 +491,7 @@ class Invoice(models.Model):
                 values['journal_id'] = journals[0].id
             journal_defaults = self.env['ir.values'].get_defaults_dict('account.invoice', 'type=%s' % type)  # noqa
             if 'journal_id' in journal_defaults:
-                values['journal_id'] = jounral_defaults['journal_id']  # noqa
+                values['journal_id'] = journal_defaults['journal_id']  # noqa
             if not values.get('journal_id'):
                 field_desc = journals.fields_get(['type'])
                 type_label = next(t for t, label in field_desc['type']['selection'] if t == journal_type)  # noqa
@@ -821,7 +821,8 @@ class Invoice(models.Model):
         35: factura electronica modo online
         49: factura electronica modo offline
         """
-        if self.reference and len(self.reference) not in [10, 35, 49]:
+        # This check can not be after the invoice creation
+        if self.state == 'done' and self.reference and len(self.reference) not in [10, 35, 49]:
             raise Warning(
                 'Error',
                 u'Debe ingresar 10, 35 o 49 dígitos según el documento.'

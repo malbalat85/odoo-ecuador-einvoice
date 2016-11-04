@@ -33,6 +33,15 @@ class Company(models.Model):
         required=True,
         default=1
     )
+    keep_accounts = fields.Selection(
+        [
+            ('1', 'SI'),
+            ('0', 'NO')
+        ],
+        string='Obligado a llevar contabilidad',
+        required=True,
+        default=1
+    )
     contingency_key_ids = fields.One2many(
         'res.company.contingency.key',
         'company_id',

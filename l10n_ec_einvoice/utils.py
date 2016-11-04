@@ -98,3 +98,14 @@ def check_service(env='prueba'):
         except requests.exceptions.RequestException, e:
             raise e
     return flag, res
+
+
+def getTipoDocumento(doctype=None):
+    """
+    Need to be converted as two digits
+    :return: unicode
+    """
+    if doctype and len(doctype) < 2:
+        return tipoDocumento['0' + doctype]
+    else:
+        return tipoDocumento[doctype]

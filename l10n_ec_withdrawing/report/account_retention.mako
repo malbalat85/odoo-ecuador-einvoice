@@ -83,4 +83,5 @@
     <br>
   </table>
   %endfor
+</body>
 </html>

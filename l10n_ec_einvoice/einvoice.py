@@ -41,6 +41,8 @@ class AccountInvoice(models.Model):
             'importeTotal': '{:.2f}'.format(invoice.amount_pay),
             'moneda': 'DOLAR'
         }
+
+        # Fixed at xml, if it's not mandatory why to pu it that way?!!
         if company.company_registry:
             infoFactura.update({'contribuyenteEspecial':
                                 company.company_registry})
@@ -144,7 +146,10 @@ class AccountInvoice(models.Model):
             if obj.type == 'out_invoice':
                 einvoice = self.render_document(obj, access_key, emission_code)
                 inv_xml = DocumentXML(einvoice, 'out_invoice')
-                inv_xml.validate_xml()
+                output, error = inv_xml.validate_xml()
+                # Need to get errors if something is bad
+                if not output:
+                    raise ValueError("Error parsing the document. Error %s", error)
                 xades = Xades()
                 file_pk12 = obj.company_id.electronic_signature
                 password = obj.company_id.password_electronic_signature
@@ -176,13 +181,18 @@ class AccountInvoice(models.Model):
     def send_einvoice(self):
         self._logger.info('Enviando documento electronico por correo')
         tmpl = self.env.ref('l10n_ec_einvoice.email_template_einvoice')
-        self.pool.get('email.template').send_mail(
-            self.env.cr,
-            self.env.user.id,
-            tmpl.id,
-            self.id
-        )
-        self.sent = True
+        try:
+            self.pool.get('email.template').send_mail(
+                self.env.cr,
+                self.env.user.id,
+                tmpl.id,
+                self.id
+            )
+        except Exception:
+            self.sent = False
+            return False
+        else:
+            self.sent = True
         return True
 
     def invoice_print(self, cr, uid, ids, context=None):

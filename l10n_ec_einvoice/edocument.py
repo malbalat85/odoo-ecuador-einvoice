@@ -69,7 +69,7 @@ class Edocument(models.AbstractModel):
             'nombreComercial': company.name,
             'ruc': company.partner_id.ced_ruc,
             'claveAcceso':  access_key,
-            'codDoc': utils.tipoDocumento[auth.type_id.code],
+            'codDoc': utils.getTipoDocumento(auth.type_id.code),
             'estab': auth.serie_entidad,
             'ptoEmi': auth.serie_emision,
             'secuencial': self.get_secuencial(),
@@ -95,7 +95,7 @@ class Edocument(models.AbstractModel):
             numero = numero[6:15]
         ld.reverse()
         fecha = ''.join(ld)
-        tcomp = utils.tipoDocumento[auth.type_id.code]
+        tcomp = utils.getTipoDocumento(auth.type_id.code)
         ruc = self.company_id.partner_id.ced_ruc
         serie = '{0}{1}'.format(auth.serie_entidad, auth.serie_emision)
         codigo_numero = self.get_code()
@@ -162,7 +162,11 @@ class Edocument(models.AbstractModel):
 
     @api.multi
     def update_document(self, auth, codes):
-        DATE_SRI = "%d/%m/%Y %H:%M:%S"
+        #This thing not make sense, why is this?!!
+        #DATE_SRI = "%d/%m/%Y %H:%M:%S"
+        # TODO: get the right database format and the use it
+
+        DATE_SRI = "%Y-%m-%d %H:%M:%S"
         self.write({
             'numero_autorizacion': auth.numeroAutorizacion,
             'estado_autorizacion': auth.estado,

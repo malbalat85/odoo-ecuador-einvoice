@@ -10,12 +10,15 @@
         'data/data_einvoice.xml',
         'views/einvoice_view.xml',
         'views/partner_view.xml',
-        'views/report_einvoice.xml',
+        #'views/report_einvoice.xml',
         'einvoice_report.xml'
     ],
     'depends': [
         'report_webkit',
         'l10n_ec_withdrawing',
+        # Without this thing invoices never created
+        # find it at https://www.odoo.com/apps/modules/{odoo-version}/report_webkit_barcode/
+        'report_webkit_barcode'
     ],
     'description': '''
     This module allows generate Electronic Documents for Ecuador
