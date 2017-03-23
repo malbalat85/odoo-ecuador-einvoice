@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+    <!-- Contingency Key Tree -->
+    <record id="view_contingency_key_tree" model="ir.ui.view">
+      <field name="name">res.company.contingency.key.tree</field>
+      <field name="model">res.company.contingency.key</field>
+      <field name="arch" type="xml">
+        <tree string="Claves de Contingencia">
+          <field name="key"/>
+          <field name="used"/>
+          <field name="company_id" invisible="1"/>
+        </tree>
+      </field>
+    </record>
+    <!-- Contingency Key Form -->
+    <record id="view_contingency_key_form" model="ir.ui.view">
+      <field name="name">res.company.contingency.key.form</field>
+      <field name="model">res.company.contingency.key</field>
+      <field name="arch" type="xml">
+        <form string="Clave de Contingencia">
+          <group>
+            <field name="key" required="1"/>
+            <field name="used"/>
+	    <field name="company_id"/>
+          </group>
+        </form>
+      </field>
+    </record>
+    <!-- Contingency Key -->
+    <record id="action_contingency_key" model="ir.actions.act_window">
+      <field name="name">Claves de Contingencia</field>
+      <field name="res_model">res.company.contingency.key</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Contingency Key MenuItem -->
+    <menuitem action="action_contingency_key" id="menu_action_contingency_key" parent="account.menu_journals"/>
+    <!-- eInvoice Form -->
+    <record id="view_account_einvoice_form" model="ir.ui.view">
+        <field name="name">account.einvoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_invoice_sent']" position="replace"/>
+            <xpath expr="//button[@name='action_invoice_sent']" position="replace">
+                <button name="action_generate_einvoice" type="object" attrs="{'invisible':['|',('sent','=',True),('state','!=','open')]}"
+                        string="Generar Fact. Electrónica" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//field[@name='move_id']" position="after">
+                <field name="clave_acceso"/>
+                <field name="numero_autorizacion"/>
+                <field name="fecha_autorizacion"/>
+                <field name="estado_autorizacion"/>
+	        <field name="ambiente"/>
+	        <field name="autorizado_sri"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- eRetention Form -->
+    <record id="view_account_eretention_form" model="ir.ui.view">
+        <field name="name">account.eretention.form</field>
+        <field name="model">account.retention</field>
+        <field name="inherit_id" ref="l10n_ec_withdrawing.view_account_retention_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_id']" position="after">
+                <field name="clave_acceso"/>
+                <field name="numero_autorizacion"/>
+                <field name="fecha_autorizacion"/>
+                <field name="estado_autorizacion"/>
+	        <field name="ambiente"/>
+	        <field name="autorizado_sri"/>
+            </xpath>
+
+        </field>
+    </record>
+
+  </data>
+</openerp>
